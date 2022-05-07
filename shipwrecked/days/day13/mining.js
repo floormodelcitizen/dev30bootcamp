@@ -1,17 +1,16 @@
-let ore = Array.from(Array(1000)).map(x => Math.floor((Math.random() * 30) + 1))
-// refining
+const ore = Array.from(Array(1000)).map(x => Math.floor((Math.random() * 30) + 1))
 let extractor = []
 let resources = 0
 const baseCamp = 0
 const mineSite = 1
 const chargingBay = 3
 
-//bender
+//Bender
 let loc = 0
 let payload = []
 let pSize = payload.length
 const pMax = 100
-let powerLevel = 100
+let  powerLevel = 100
 
 const state = {
   loc: loc,
@@ -29,7 +28,6 @@ function stateUpdate() {
   state.resources = resources
   console.log(state)
 }
-
 
 // Self Scan
 function whatsNext() {
