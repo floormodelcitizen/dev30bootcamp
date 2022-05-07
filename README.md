@@ -1,1 +1,1 @@
-Projects for the Dev30 course
+Projects for the Dev30 program through Parsity
