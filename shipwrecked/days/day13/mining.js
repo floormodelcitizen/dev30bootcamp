@@ -13,28 +13,31 @@ let pSize = payload.length
 const pMax = 100
 let powerLevel = 100
 
-const stats = {
+const state = {
   loc: loc,
   powerLevel: powerLevel,
   payload: pSize,
-  ore: ore.length
+  ore: ore.length,
+  resources: resources
 }
 
-function statsUpdate() {
-  stats.loc = loc
-  stats.powerLevel = powerLevel
-  stats.ore = ore.length
-  stats.payload = payload.length
-  console.log(stats)
+function stateUpdate() {
+  state.loc = loc
+  state.powerLevel = powerLevel
+  state.ore = ore.length
+  state.payload = payload.length
+  state.resources = resources
+  console.log(state)
 }
 
 
 // Self Scan
 function whatsNext() {
+  console.log(state.payload === pMax);
   console.log(`Commence Self Scan`)
-  if (stats.powerLevel < 13) {
+  if (state.powerLevel < 13) {
     charging()
-  } else if (stats.payload === pMax) {
+  } else if (state.payload === pMax) {
     offloading()
   } else {
     mining()
@@ -49,29 +52,36 @@ function mining() {
     payload.push(ore.shift())
   }
   powerLevel -= 7
-  return statsUpdate()
-
+  stateUpdate()
+  whatsNext()
 }
-
-
-console.log(powerLevel)
-console.log(pSize)
-console.log(stats)
-mining()
-whatsNext()
 
 
 // Offloading
 function offloading() {
   console.log(`Commence Off-loading`)
+  while (payload.length > 0) {
+    extractor.push(payload.shift())
+  }
+  powerLevel -= 7
+  stateUpdate()
+  refining()
 }
 
 // Refining
 function refining() {
   console.log(`Commence Refining`)
+  for (let i = 0; 0 < extractor.length; i++) {
+    extractor.shift()
+    resources++
+  }
+  stateUpdate()
+  whatsNext()
 }
 
 // Charging
 function charging() {
-  console.log(`Charging commen...Zzzzzz `)
+  console.log(`Charging commence...Zzzzzz `)
 }
+
+whatsNext()
