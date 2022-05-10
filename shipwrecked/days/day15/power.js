@@ -1,6 +1,6 @@
 // Elements and Materials
 const carbon = 'C'
-const cellulos = '(C6H10O5)n'
+const cellulose = '(C6H10O5)n'
 const chromium = 'Cr'
 const copper = 'Cu'
 const iron = 'Fe'
@@ -36,7 +36,7 @@ const battery = [
       pyrolusite
     ],
   separator =
-    [cellulos],
+    [cellulose],
   anode =
     [zinc],
   electrolyte =
