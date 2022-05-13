@@ -12,7 +12,7 @@ let pSize = payload.length
 const pMax = 100
 let  powerLevel = 100
 
-const state = {
+const bender = {
   loc: loc,
   powerLevel: powerLevel,
   payload: pSize,
@@ -20,22 +20,22 @@ const state = {
   resources: resources
 }
 
-function stateUpdate() {
-  state.loc = loc
-  state.powerLevel = powerLevel
-  state.ore = ore.length
-  state.payload = payload.length
-  state.resources = resources
-  console.log(state)
+function benderUpdate() {
+  bender.loc = loc
+  bender.powerLevel = powerLevel
+  bender.ore = ore.length
+  bender.payload = payload.length
+  bender.resources = resources
+  console.log(bender)
 }
 
 // Self Scan
 function whatsNext() {
-  console.log(state.payload === pMax);
+  console.log(bender.payload === pMax);
   console.log(`Commence Self Scan`)
-  if (state.powerLevel < 13) {
+  if (bender.powerLevel < 13) {
     charging()
-  } else if (state.payload === pMax) {
+  } else if (bender.payload === pMax) {
     offloading()
   } else {
     mining()
@@ -50,7 +50,7 @@ function mining() {
     payload.push(ore.shift())
   }
   powerLevel -= 7
-  stateUpdate()
+  benderUpdate()
   whatsNext()
 }
 
@@ -62,7 +62,7 @@ function offloading() {
     extractor.push(payload.shift())
   }
   powerLevel -= 7
-  stateUpdate()
+  benderUpdate()
   refining()
 }
 
@@ -73,7 +73,7 @@ function refining() {
     extractor.shift()
     resources++
   }
-  stateUpdate()
+  benderUpdate()
   whatsNext()
 }
 

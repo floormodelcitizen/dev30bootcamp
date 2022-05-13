@@ -18,23 +18,12 @@ let potassiumHydroxide = [...'KOH']
 let pyrolusite = [...'MNO2']
 let water = [...'H2O']
 let zinc = [...'ZN']
-let materials = [ carbon, cellulose, chromium, copper, iron, lead, potassiumHydroxide, water, zinc ]
+let materials = [carbon, cellulose, chromium, copper, iron, lead, potassiumHydroxide, water, zinc]
+let particles = [['0'], ['1'], ['2'], ['5'], ['6'], ['B'], ['C'], ['E'], ['F'], ['H'], ['K'], ['N'], ['O'], ['P'], ['R'], ['U'], ['Z']]
 
-const useIteration = materials => {
-  const map = [];
-  for (let value of materials) {
-    if (map.indexOf(value) === -1) {
-      map.push(value);
-    }
-  }
-  return map;
-};
+let discard = []
 
-const result = useIteration(materials);
-console.log(result);
-
-let uniqueChar = ['C','6','H','1','0','O','5','N','R','U','F','E','P','B','K','H','2','Z']
-useIteration()
+console.log(`iron: ${ iron }`)
 
 function mining() {
   console.log(`Commencing mining`)
@@ -62,13 +51,38 @@ function extraction() {
     resources.push(char)
   }
   console.log(`resources: ${ resources }`)
+  console.log(resources.length)
+  sorter()
 }
 
 function sorter() {
-  for (let i = 0; i < resources.length; i++) {
-    const element = array[i];
-
-  }
+  resources.forEach((i, x) => {
+    particles.forEach((p, d) => {
+      if (particles[d][0].includes(i)) {
+        particles[d].push(i)
+      }
+    })
+  })
+  this.particles = particles
 }
 
 mining()
+
+console.log(particles)
+
+// Todos:
+function organicExtractor() {
+  console.log('Coming soon to a planet near me')
+}
+function recombiner() {
+  console.log('Coming soon to a planet near me')
+}
+function automatedBatteryProduction() {
+  console.log('Triggers based on available materials levels');
+}
+function fabricator () {
+  console.log('The things to build all the things.');
+}
+fam = 'Bender' + 'bots' * 4
+
+console.log(25/27);
