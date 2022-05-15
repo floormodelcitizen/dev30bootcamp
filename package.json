@@ -1,32 +1,17 @@
 {
-  "name": "dev30",
-  "version": "1.0.0",
-  "description": "Dev30 course resources",
-  "main": "index.js",
-  "scripts": {
-    "test": "tcom",
-    "lint": "eslint --fix main.js",
-    "format": "prettier -w ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/devluxv20/dev30.git"
-  },
-  "keywords": [
-    "javascript"
-  ],
-  "author": "DevLuxv20",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/devluxv20/dev30/issues"
-  },
-  "homepage": "https://github.com/devluxv20/dev30#readme",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.2"
   }
 }
