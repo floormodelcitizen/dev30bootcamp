@@ -1,85 +1,86 @@
-const ore = Array.from(Array(1000)).map(x => Math.floor((Math.random() * 30) + 1))
-let extractor = []
-let resources = 0
-const baseCamp = 0
-const mineSite = 1
-const chargingBay = 3
+const ore = Array.from(Array(1000)).map((x) =>
+  Math.floor(Math.random() * 30 + 1)
+);
+let extractor = [];
+let resources = 0;
+const baseCamp = 0;
+const mineSite = 1;
+const chargingBay = 3;
 
 //Bender
-let loc = 0
-let payload = []
-let pSize = payload.length
-const pMax = 100
-let  powerLevel = 100
+let loc = 0;
+let payload = [];
+let pSize = payload.length;
+const pMax = 100;
+let powerLevel = 100;
 
 const bender = {
   loc: loc,
   powerLevel: powerLevel,
   payload: pSize,
   ore: ore.length,
-  resources: resources
-}
+  resources: resources,
+};
 
 function benderUpdate() {
-  bender.loc = loc
-  bender.powerLevel = powerLevel
-  bender.ore = ore.length
-  bender.payload = payload.length
-  bender.resources = resources
-  console.log(bender)
+  bender.loc = loc;
+  bender.powerLevel = powerLevel;
+  bender.ore = ore.length;
+  bender.payload = payload.length;
+  bender.resources = resources;
+  console.log(bender);
 }
 
 // Self Scan
 function whatsNext() {
   console.log(bender.payload === pMax);
-  console.log(`Commence Self Scan`)
+  console.log(`Commence Self Scan`);
   if (bender.powerLevel < 13) {
-    charging()
+    charging();
   } else if (bender.payload === pMax) {
-    offloading()
+    offloading();
   } else {
-    mining()
+    mining();
   }
 }
 
 // Mining
 function mining() {
-  loc = 1
-  console.log(`Commencing mining`)
+  loc = 1;
+  console.log(`Commencing mining`);
   while (payload.length < pMax) {
-    payload.push(ore.shift())
+    payload.push(ore.shift());
   }
-  powerLevel -= 7
-  benderUpdate()
-  whatsNext()
+  powerLevel -= 7;
+  benderUpdate();
+  whatsNext();
 }
-
 
 // Offloading
 function offloading() {
-  console.log(`Commence Off-loading`)
+  console.log(`Commence Off-loading`);
   while (payload.length > 0) {
-    extractor.push(payload.shift())
+    extractor.push(payload.shift());
   }
-  powerLevel -= 7
-  benderUpdate()
-  refining()
+  powerLevel -= 7;
+  benderUpdate();
+  refining();
 }
 
 // Refining
 function refining() {
-  console.log(`Commence Refining`)
+  console.log(`Commence Refining`);
   for (let i = 0; 0 < extractor.length; i++) {
-    extractor.shift()
-    resources++
+    extractor.shift();
+    resources++;
   }
-  benderUpdate()
-  whatsNext()
+  benderUpdate();
+  whatsNext();
 }
 
 // Charging
 function charging() {
-  console.log(`Charging commence...Zzzzzz `)
+  console.log(`Charging commence...Zzzzzz `);
 }
 
-whatsNext()
+whatsNext();

@@ -4,8 +4,6 @@ Codecademy’s annual race is just around the corner! This year, we have a lot o
 
 As a timeline, registration would look like this:
 
-
-
 Here’s how our registration works. There are adult runners (over 18 years of age) and youth runners (under 18 years of age). They can register early or late. Runners are assigned a race number and start time based on their age and registration.
 
 Race number:
@@ -26,7 +24,7 @@ But we didn’t plan for runners that are exactly 18! We’ll handle that by the
 
 Race numbers are assigned randomly. Here's one way to do it:
 
-let raceNumber = Math.floor(Math.random() * 1000);
+let raceNumber = Math.floor(Math.random() \* 1000);
 
 ### Step 2.
 

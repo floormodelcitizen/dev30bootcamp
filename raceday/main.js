@@ -8,29 +8,30 @@
 // Youth registrants run at 12:30 pm (regardless of registration).
 // 18 yo
 
-let  raceNumber;
-let  earlyReg;
-let  age;
-
+let raceNumber;
+let earlyReg;
+let age;
 
 function assignNumber(age, earlyReg = false) {
-  raceNumber = Math.floor(Math.random() * 1000)
+  raceNumber = Math.floor(Math.random() * 1000);
   if (age > 18 && earlyReg === true) {
-    raceNumber = raceNumber + 1000
+    raceNumber = raceNumber + 1000;
   }
-  startTimeNotification(age, earlyReg, raceNumber)
+  startTimeNotification(age, earlyReg, raceNumber);
 }
 
 function startTimeNotification(age, earlyReg, raceNumber) {
-  let startTime = '12:30 pm'
+  let startTime = "12:30 pm";
   if (age >= 18) {
     if (earlyReg === true) {
-      startTime = '9:30 am'
+      startTime = "9:30 am";
     } else {
-      startTime = '11:00 am'
+      startTime = "11:00 am";
     }
   }
-  console.log(`Attention: Runner number ${raceNumber} your scheduled start time is ${startTime}.`)
+  console.log(
+    `Attention: Runner number ${raceNumber} your scheduled start time is ${startTime}.`
+  );
 }
 
-assignNumber()
+assignNumber();

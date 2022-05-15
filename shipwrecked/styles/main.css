@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'ailerons';
+  font-family: "ailerons";
   src: url(../assets/Ailerons-Regular.otf);
 }
 
@@ -14,5 +14,5 @@ body {
 .imposter__title {
   text-align: center;
   font-family: ailerons, Helvetica, sans-serif;
-  color: #FFF;
+  color: #fff;
 }
