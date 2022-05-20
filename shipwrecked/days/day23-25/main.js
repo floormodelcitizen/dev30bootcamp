@@ -12,8 +12,8 @@ console.log('harvest :>> ', harvest);
 const payload = [...mining, ...harvest];
 console.log('payload :>> ', payload);
 
-const refine = payload.map(x => String.fromCharCode(x));
-console.log('refine :>> ', refine);
+const particles = payload.map(x => String.fromCharCode(x));
+console.log('particles :>> ', particles);
 
 const materials = {
   carbon: ['C'],
@@ -29,8 +29,35 @@ const materials = {
 };
 console.log('materials :>> ', materials);
 
-const uParticles = '01256BCEFHKNOPRUZ';
-const particles = [...uParticles];
-const molecules = refine.filter(arr => particles.includes(refine[arr]));
-console.log('particles :>> ', particles);
-console.log('molecules :>> ', molecules);
+const inventory = {
+  0: 0,
+  1: 0,
+  2: 0,
+  5: 0,
+  6: 0,
+  B: 0,
+  C: 0,
+  E: 0,
+  F: 0,
+  H: 0,
+  K: 0,
+  N: 0,
+  O: 0,
+  P: 0,
+  R: 0,
+  U: 0,
+  Z: 0,
+};
+
+const molecules = Object.keys(inventory);
+const refine = (arr1, arr2) => {
+  const refined = arr1.filter(el => arr2.indexOf(el) !== -1);
+  return refined;
+};
+
+const resources = refine(particles, molecules);
+
+console.log('resources :>> ', resources);
+console.log('inventory :>> ', inventory);
+
+refine(particles, molecules);

@@ -1,28 +1,28 @@
-let ore = Array.from(Array(100)).map((x) =>
+const ore = Array.from(Array(100)).map(x =>
   Math.floor(Math.random() * (90 - 65 + 1) + 65)
 );
 console.log(ore);
-let fruit = Array.from(Array(100)).map((x) =>
+const fruit = Array.from(Array(100)).map(x =>
   Math.floor(Math.random() * (57 - 48 + 1) + 48)
 );
 console.log(fruit);
 
-let resources = [];
+const resources = [];
 let extractor = [];
-let payload = [];
+const payload = [];
 const payloadMax = 100;
 
-let carbon = ["C"];
-let cellulose = [..."C6H10O5N"];
-let chromium = [..."CR"];
-let copper = [..."CU"];
-let iron = [..."FE"];
-let lead = [..."PB"];
-let potassiumHydroxide = [..."KOH"];
-let pyrolusite = [..."MNO2"];
-let water = [..."H2O"];
-let zinc = [..."ZN"];
-let materials = [
+const carbon = ['C'];
+const cellulose = [...'C6H10O5N'];
+const chromium = [...'CR'];
+const copper = [...'CU'];
+const iron = [...'FE'];
+const lead = [...'PB'];
+const potassiumHydroxide = [...'KOH'];
+const pyrolusite = [...'MNO2'];
+const water = [...'H2O'];
+const zinc = [...'ZN'];
+const materials = [
   carbon,
   cellulose,
   chromium,
@@ -33,27 +33,27 @@ let materials = [
   water,
   zinc,
 ];
-let particles = [
-  ["0"],
-  ["1"],
-  ["2"],
-  ["5"],
-  ["6"],
-  ["B"],
-  ["C"],
-  ["E"],
-  ["F"],
-  ["H"],
-  ["K"],
-  ["N"],
-  ["O"],
-  ["P"],
-  ["R"],
-  ["U"],
-  ["Z"],
+const particles = [
+  ['0'],
+  ['1'],
+  ['2'],
+  ['5'],
+  ['6'],
+  ['B'],
+  ['C'],
+  ['E'],
+  ['F'],
+  ['H'],
+  ['K'],
+  ['N'],
+  ['O'],
+  ['P'],
+  ['R'],
+  ['U'],
+  ['Z'],
 ];
 
-let discard = [];
+const discard = [];
 
 console.log(`iron: ${iron}`);
 
@@ -77,9 +77,9 @@ function offLoad() {
 
 function extraction() {
   console.log(`Commencing extraction`);
-  extractor = extractor.map((x) => String.fromCharCode(x));
-  for (let i = 0; 0 < extractor.length; i++) {
-    let char = extractor.pop(i);
+  extractor = extractor.map(x => String.fromCharCode(x));
+  for (let i = 0; extractor.length > 0; i++) {
+    const char = extractor.pop(i);
     resources.push(char);
   }
   console.log(`resources: ${resources}`);
@@ -104,17 +104,17 @@ console.log(particles);
 
 // Todos:
 function organicExtractor() {
-  console.log("Coming soon to a planet near me");
+  console.log('Coming soon to a planet near me');
 }
 function recombiner() {
-  console.log("Coming soon to a planet near me");
+  console.log('Coming soon to a planet near me');
 }
 function automatedBatteryProduction() {
-  console.log("Triggers based on available materials levels");
+  console.log('Triggers based on available materials levels');
 }
 function fabricator() {
-  console.log("The things to build all the things.");
+  console.log('The things to build all the things.');
 }
-fam = "Bender" + "bots" * 4;
+fam = `Bender` + `${'bots' * 4}`;
 
 console.log(25 / 27);
