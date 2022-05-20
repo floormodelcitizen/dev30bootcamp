@@ -24,10 +24,12 @@ const materials = {
   lead: [...'PB'],
   potassiumHydroxide: [...'KOH'],
   pyrolusite: [...'MNO2'],
-  water: [...'H2O'],
   zinc: [...'ZN'],
+  brass: [...'ZNCUPB'],
+  steel: [...'CRCFE'],
+  water: [...'H2O'],
+  battery: [this.brass, this.steel, this.cellulose],
 };
-console.log('materials :>> ', materials.cellulose);
 
 const inventory = {
   0: 0,
@@ -55,12 +57,12 @@ const inventory = {
   lead: 0,
   potassiumHydroxide: 0,
   pyrolusite: 0,
-  water: 0,
   zinc: 0,
+  brass: 0,
+  steel: 0,
+  water: 0,
+  battery: 0,
 };
-
-console.log('inventory.C :>> ', inventory.C);
-console.log('inventory.carbon :>> ', inventory.carbon);
 
 const molecules = Object.keys(inventory);
 const refine = (arr1, arr2) => {
@@ -75,33 +77,51 @@ const intoInventory = resources.forEach(res => {
   return inventory;
 });
 
-function makeWater() {
-  console.log('inventory.H :>> ', inventory.H);
-  console.log('inventory.O :>> ', inventory.O);
-  // if (inventory.H > 0 && inventory.O > 1) {
-  //   inventory.H -= 1;
-  //   inventory.O -= 2;
-  //   inventory.water += 1;
-  //   console.log('water :>> ', inventory.water);
-  // } else {
-  //   console.warn('ISF !water');
-  // }
-}
+function fabricate(material) {
+  const pickList = [];
+  let pickResult = pickList.length === material.length;
+  console.log('mat :>> ', inventory.material);
 
-function make(material) {
-  material.forEach(i => {
-    console.log('i :>> ', i);
-    if (inventory[i] > 0) {
-      console.log('inventory[i]:>> ', inventory[i]);
-      inventory[i] -= 1;
-    } else {
-      return console.warn(`ISF !${i}`);
+  const pick = function () {
+    console.log(`Commencing pick...`);
+    material.forEach(i => {
+      if (inventory[i] > 0) {
+        pickList.push(i);
+      } else {
+        return console.warn(`ISF !${i}`);
+      }
+      return pickList;
+    });
+    pickResult = pickList.length === material.length;
+    return pickList;
+  };
+
+  console.log(`pickResult ${pickResult}`);
+
+  function make() {
+    if (pickResult === true) {
+      console.log(`Commencing make...`);
+      // console.log('mat :>> ', material);
+      pickList.forEach(i => {
+        console.log('inventory[i] :>> ', inventory[i]);
+        inventory[i] -= 1;
+      });
+      // console.log('mat :>> ', material);
     }
-    return make;
-  });
+    return material;
+  }
+
+  pick();
+  make();
 }
 
-refine(particles, molecules);
-makeWater();
-make(materials.cellulose);
-console.log('Current Inventory :>> ', inventory);
+fabricate(materials.brass);
+// make(materials.steel);
+// make(materials.water);
+// make(materials.cellulose);
+// console.log('Current Inventory :>> ', displayInventory);
+// const displayInventory = Object.entries(inventory).forEach(i => {
+//   console.log('inv :>> ', i);
+// });
+
+console.log('mat out :>> ', materials.brass);
