@@ -27,7 +27,7 @@ const materials = {
   water: [...'H2O'],
   zinc: [...'ZN'],
 };
-console.log('materials :>> ', materials);
+console.log('materials :>> ', materials.cellulose);
 
 const inventory = {
   0: 0,
@@ -47,7 +47,20 @@ const inventory = {
   R: 0,
   U: 0,
   Z: 0,
+  carbon: this.C,
+  cellulose: 0,
+  chromium: 0,
+  copper: 0,
+  iron: 0,
+  lead: 0,
+  potassiumHydroxide: 0,
+  pyrolusite: 0,
+  water: 0,
+  zinc: 0,
 };
+
+console.log('inventory.C :>> ', inventory.C);
+console.log('inventory.carbon :>> ', inventory.carbon);
 
 const molecules = Object.keys(inventory);
 const refine = (arr1, arr2) => {
@@ -57,7 +70,38 @@ const refine = (arr1, arr2) => {
 
 const resources = refine(particles, molecules);
 
-console.log('resources :>> ', resources);
-console.log('inventory :>> ', inventory);
+const intoInventory = resources.forEach(res => {
+  inventory[res] += 1;
+  return inventory;
+});
+
+function makeWater() {
+  console.log('inventory.H :>> ', inventory.H);
+  console.log('inventory.O :>> ', inventory.O);
+  // if (inventory.H > 0 && inventory.O > 1) {
+  //   inventory.H -= 1;
+  //   inventory.O -= 2;
+  //   inventory.water += 1;
+  //   console.log('water :>> ', inventory.water);
+  // } else {
+  //   console.warn('ISF !water');
+  // }
+}
+
+function make(material) {
+  material.forEach(i => {
+    console.log('i :>> ', i);
+    if (inventory[i] > 0) {
+      console.log('inventory[i]:>> ', inventory[i]);
+      inventory[i] -= 1;
+    } else {
+      return console.warn(`ISF !${i}`);
+    }
+    return make;
+  });
+}
 
 refine(particles, molecules);
+makeWater();
+make(materials.cellulose);
+console.log('Current Inventory :>> ', inventory);
