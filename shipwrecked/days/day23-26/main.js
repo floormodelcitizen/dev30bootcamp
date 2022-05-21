@@ -77,51 +77,70 @@ const intoInventory = resources.forEach(res => {
   return inventory;
 });
 
-function fabricate(material) {
+const buildQueue = [materials.steel, materials.brass];
+
+function preProd() {
+  buildQueue.forEach(item => {
+    const buildItem = item.sort();
+    console.log('buildItem.sort :>> ', buildItem);
+    return buildItem;
+  });
+}
+
+function fabricate(buildItem) {
   const pickList = [];
-  let pickResult = pickList.length === material.length;
-  console.log('mat :>> ', inventory.material);
+  let pickResult = pickList.length === buildItem.length;
+  console.log('pickResult (pre) :>> ', pickResult);
+  console.log('mat :>> ', buildItem);
 
   const pick = function () {
     console.log(`Commencing pick...`);
-    material.forEach(i => {
+    buildItem.forEach(i => {
       if (inventory[i] > 0) {
         pickList.push(i);
+        console.log('mat :>> ', pickList);
       } else {
         return console.warn(`ISF !${i}`);
       }
       return pickList;
     });
-    pickResult = pickList.length === material.length;
+    pickResult = pickList.length === buildItem.length;
+    console.log(`pickResult inPick: ${pickResult}`);
     return pickList;
   };
 
-  console.log(`pickResult ${pickResult}`);
-
   function make() {
+    console.log(`pickResult pre-mk ${pickResult}`);
     if (pickResult === true) {
       console.log(`Commencing make...`);
-      // console.log('mat :>> ', material);
+      // console.log('mat :>> ', buildItem);
       pickList.forEach(i => {
         console.log('inventory[i] :>> ', inventory[i]);
         inventory[i] -= 1;
       });
-      // console.log('mat :>> ', material);
+      // console.log('mat :>> ', buildItem);
+    } else {
+      console.log('ISF: Back to the mines!');
+      mining();
     }
-    return material;
+    return buildItem;
   }
 
   pick();
   make();
+
+  console.log('pL===mat :>> ', pickList.length === buildQueue.length);
+  console.log('pickResult :>> ', pickResult);
 }
 
-fabricate(materials.brass);
-// make(materials.steel);
-// make(materials.water);
-// make(materials.cellulose);
-// console.log('Current Inventory :>> ', displayInventory);
+preProd();
+
 // const displayInventory = Object.entries(inventory).forEach(i => {
 //   console.log('inv :>> ', i);
 // });
-
-console.log('mat out :>> ', materials.brass);
+console.log('queue ofn:>> ', buildQueue);
+console.log('mat out :>> ', materials.brass.toString());
+console.log(
+  'mat out :>> ',
+  materials.brass.toString() === ['Z', 'N', 'C', 'U', 'P', 'B'].toString()
+);
