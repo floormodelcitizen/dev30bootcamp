@@ -5,6 +5,7 @@
   },
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
+  "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": [
       "error",

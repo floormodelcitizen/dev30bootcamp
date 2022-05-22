@@ -230,5 +230,5 @@ letters = [...letters].filter(v => v !== ' ');
 
 const lookup = {};
 for (const number of numbers) {
-  lookup[number] = (lookup[number] ?? 0) + 1; // ?? denotes if a value is undefined use a default
+  lookup[number] = (lookup[number] ?? 0) + 1; // ?? nullish coalesing denotes if a value is undefined use a default
 }
