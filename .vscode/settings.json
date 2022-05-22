@@ -3,5 +3,6 @@
   "prettier.singleQuote": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
-  "svelte.plugin.svelte.format.config.singleQuote": true
+  "svelte.plugin.svelte.format.config.singleQuote": true,
+  "editor.autoClosingQuotes": "always"
 }
