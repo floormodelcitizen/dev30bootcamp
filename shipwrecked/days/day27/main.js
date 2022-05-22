@@ -64,6 +64,38 @@ const inventory = {
   battery: 0,
 };
 
+const inventoryList = [
+  {
+    name: 'Nickel',
+    id: 'Ni',
+    quantity: [],
+  },
+  {
+    name: 'Cellulose',
+    id: 'C6H10O5N',
+    quantity: [],
+  },
+];
+
+const currentInventory = [
+  {
+    name: inventoryList[name],
+    id: inventoryList.id,
+    symForm: [...inventoryList.id],
+    quantity: inventoryList.id.length,
+  },
+];
+
+function convertInv() {
+  const invObj = Object.keys(inventoryList);
+  console.log('currentInventory :>> ', invObj);
+  // inventoryList.forEach(i => {
+  //   return inventoryList;
+  // });
+}
+
+convertInv();
+
 const molecules = Object.keys(inventory);
 const refine = (arr1, arr2) => {
   const refined = arr1.filter(el => arr2.indexOf(el) !== -1);
