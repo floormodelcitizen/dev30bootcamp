@@ -116,4 +116,119 @@ const numbersTimes10Obj = numbers.map(v => ({ value: v * 10 }));
 numbersTimes10Obj;
 
 // map and filter
-const numbersWithNeg = [10, -20, 30, -40, 50];
+const numbersWithNegs = [-10, 20, 30, -40, -50];
+const positiveBy10 = numbersWithNegs.filter(v => v > 0).map(v => v * 10);
+positiveBy10;
+
+// mapping over Obj
+const siblings = [
+  { firstName: 'Jane', lastName: 'Smith', address: { city: 'Oakland' } },
+  { firstName: 'Sally', lastName: 'Joseph', address: { city: 'Watts' } },
+];
+
+const fullNames = siblings.map(p => ({
+  ...p,
+  fullName: `${p.first} ${p.last}`,
+}));
+fullNames;
+fullNames[0].first = 'Penny';
+fullNames[0].address.city = 'San Jose';
+siblings;
+
+// Array.from(); there is a map built-in to Array.from
+numbers;
+
+// cerates a shallow copy
+Array.from(numbers);
+Array.from(numbers, v => v * 10);
+
+// .flat()
+const arrayOfArrays1 = [
+  [10, 20, 30],
+  [10, 20, 30],
+  [70, 80, 90],
+];
+arrayOfArrays1.flat();
+
+const deepNumbers = [[[[10, 20, 30]]], [[[10, 20, 30]]], [[[70, 80, 90]]]];
+
+deepNumbers.flat(1);
+deepNumbers.flat(2);
+deepNumbers.flat(Infinity);
+
+// flatMap
+const values = [10, 20, 30, 40, 50];
+
+values.map((v, i) => [v, i]);
+values.flatMap((v, i) => [v, i]);
+
+// concat
+const firstArr = [10, 20];
+const secondArr = [30, 40, 50];
+
+firstArr.concat(secondArr).map(v => v * 10);
+
+[...firstArr, ...secondArr].map(v => v * 10);
+
+// reduce
+const numArr1 = [10, 20, 30, 40, 50];
+
+// ole' skool
+let sum = 0;
+for (const value of numArr1) {
+  sum += value;
+}
+sum;
+
+// new skool
+numArr1.reduce((s, v) => {
+  s += v;
+  return sum;
+}, 0);
+
+// refactored
+numArr1.reduce((s, v) => s + v);
+
+// average
+numArr1.reduce((avg, value, _, arr) => avg + value / arr.length, 0);
+
+//
+const browsers = [
+  'Samsung',
+  'Chrome',
+  'Firefox',
+  'Safari',
+  'Opera',
+  'Edge',
+  'Brave',
+];
+
+// long way around
+browsers.reduce((str, name, index) => str + (index > 0 ? ', ' : '') + name, '');
+// better way
+browsers.join(', ');
+
+numbers.reduce((arr, number) => [...arr, number], []);
+numbers.reduceRight((arr, number) => [...arr, number], []);
+
+// return an array for a different size than original
+const groups = [
+  [3, 2],
+  [2, 5],
+  [3, 7],
+];
+
+// [2,2,2,5,5,7,7,7]
+groups.reduce(
+  (arr, [count, value]) => [...arr, ...Array(count).fill(value)],
+  []
+);
+
+// use reduce to create an object
+const letters = 'the quick brown fox jumped over the lazy dog';
+letters = [...letters].filter(v => v !== ' ');
+
+const lookup = {};
+for (const number of numbers) {
+  lookup[number] = (lookup[number] ?? 0) + 1; // ?? denotes if a value is undefined use a default
+}
