@@ -225,10 +225,64 @@ groups.reduce(
 );
 
 // use reduce to create an object
-const letters = 'the quick brown fox jumped over the lazy dog';
+let letters = 'the quick brown fox jumped over the lazy dog';
 letters = [...letters].filter(v => v !== ' ');
 
 const lookup = {};
-for (const number of numbers) {
-  lookup[number] = (lookup[number] ?? 0) + 1; // ?? nullish coalesing denotes if a value is undefined use a default
+for (const letter of letters) {
+  lookup[letter] = (lookup[letter] ?? 0) + 1; // ?? nullish coalesing denotes if a value is undefined use a default
 }
+lookup;
+
+// > '...lookup' contains all of the original values. Because '[value]: (lookup[value] ?? 0) + 1' comes later in sequence it overwrites the existing value; starting at 0, and incrementing by +1. Reduce returns the previous value (via the accumulator), e.g., a value occurring for the second time would already have a value of 1 and be incremented by +1 to now be 2.
+
+letters.reduce(
+  (lookup, value) => ({
+    ...lookup,
+    [value]: (lookup[value] ?? 0) + 1, //
+  }),
+  {}
+);
+
+numbers.reduce(
+  ({ min, max }, value) => ({
+    min: Math.min(min, value),
+    max: Math.max(max, value),
+  }),
+  {
+    min: Infinity,
+    max: -Infinity,
+  }
+);
+
+// Values, Keys, and Entries (can be used between objects and arrays)
+// Entries returns an array of arrays wherein [index, value]
+values.entries();
+for (const value of values.entries()) {
+  console.log('value :>> ', value);
+}
+
+// Keys returns an array of keys, (indexes)
+values.keys();
+for (const value of values.keys()) {
+  console.log('value :>> ', value);
+}
+
+// Values returns an array of values
+values.values();
+for (const value of values.values()) {
+  console.log('value :>> ', value);
+}
+
+// V's, K's, and E's can be used between objects and arrays
+const customers = {
+  Peter: 12,
+  MJ: 15,
+  Gwen: 18,
+};
+
+function sumOf(objORArray) {
+  return Object.values(objORArray).reduce((sum, value) => sum + value, 0);
+}
+sumOf(values);
+sumOf(customers);
