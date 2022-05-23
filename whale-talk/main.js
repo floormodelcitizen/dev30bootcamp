@@ -5,6 +5,7 @@ input = [...input];
 const vowels = ['a', 'e', 'i', 'o', 'u'];
 
 const resultArray = input.filter(([value]) => vowels.includes(value));
+
 resultArray.forEach(v => {
   switch (v) {
     case 'e':
@@ -17,6 +18,7 @@ resultArray.forEach(v => {
       break;
   }
 });
+
 resultArray.toString().toUpperCase();
 
 console.log('resultsArray :>> ', resultArray);
