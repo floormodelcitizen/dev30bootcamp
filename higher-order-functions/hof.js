@@ -128,7 +128,7 @@ const siblings = [
 
 const fullNames = siblings.map(p => ({
   ...p,
-  fullName: `${p.first} ${p.last}`,
+  fullName: `${p.firstName} ${p.lastName}`,
 }));
 fullNames;
 fullNames[0].first = 'Penny';
@@ -183,7 +183,7 @@ sum;
 // new skool
 numArr1.reduce((s, v) => {
   s += v;
-  return sum;
+  return s;
 }, 0);
 
 // refactored

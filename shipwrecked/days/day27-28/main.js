@@ -1,178 +1,173 @@
-const ore = () => Math.floor(Math.random() * (90 - 65 + 1) + 65);
-const fruit = () => Math.floor(Math.random() * (57 - 48 + 1) + 48);
-
-const miningMax = 100;
-const mining = Array.from(Array(miningMax)).map(ore);
-console.log('mining :>> ', mining);
-
-const harvestMax = 30;
-const harvest = Array.from(Array(harvestMax)).map(fruit);
-console.log('harvest :>> ', harvest);
-
-const payload = [...mining, ...harvest];
-console.log('payload :>> ', payload);
-
-const particles = payload.map(x => String.fromCharCode(x));
-console.log('particles :>> ', particles);
-
-const materials = {
-  carbon: ['C'],
-  cellulose: [...'C6H10O5N'],
-  chromium: [...'CR'],
-  copper: [...'CU'],
-  iron: [...'FE'],
-  lead: [...'PB'],
-  potassiumHydroxide: [...'KOH'],
-  pyrolusite: [...'MNO2'],
-  zinc: [...'ZN'],
-  brass: [...'ZNCUPB'],
-  steel: [...'CRCFE'],
-  water: [...'H2O'],
-  battery: [this.brass, this.steel, this.cellulose],
+let rawParticles = [];
+const particles = {
+  0: [],
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
+  6: [],
+  7: [],
+  8: [],
+  9: [],
+  a: [],
+  b: [],
+  c: [],
+  d: [],
+  e: [],
+  f: [],
+  g: [],
+  h: [],
+  i: [],
+  j: [],
+  k: [],
+  l: [],
+  m: [],
+  n: [],
+  o: [],
+  p: [],
+  q: [],
+  r: [],
+  s: [],
+  t: [],
+  u: [],
+  v: [],
+  w: [],
+  x: [],
+  y: [],
+  z: [],
 };
-
-const inventory = {
-  0: 0,
-  1: 0,
-  2: 0,
-  5: 0,
-  6: 0,
-  B: 0,
-  C: 0,
-  E: 0,
-  F: 0,
-  H: 0,
-  K: 0,
-  N: 0,
-  O: 0,
-  P: 0,
-  R: 0,
-  U: 0,
-  Z: 0,
-  carbon: this.C,
-  cellulose: 0,
-  chromium: 0,
-  copper: 0,
-  iron: 0,
-  lead: 0,
-  potassiumHydroxide: 0,
-  pyrolusite: 0,
-  zinc: 0,
-  brass: 0,
-  steel: 0,
-  water: 0,
-  battery: 0,
+const atoms = {
+  carbon: { id: 'C', quantity: [] },
+  cellulose: { id: 'C6H10O5N', quantity: [] },
+  chromium: { id: 'Cr', quantity: [] },
+  copper: { id: 'Cu', quantity: [] },
+  hydrogen: { id: 'H', quantity: [] },
+  iron: { id: 'Fe', quantity: [] },
+  lead: { id: 'Pb', quantity: [] },
+  manganese: { id: 'Mn', quantity: [] },
+  nickel: { id: 'Ni', quantity: [] },
+  oxygen: { id: 'O', quantity: [] },
+  zinc: { id: 'Zn', quantity: [] },
 };
-
-const inventoryList = [
-  {
-    name: 'Nickel',
-    id: 'Ni',
+const compounds = {
+  potassiumHydroxide: { id: 'KOH', quantity: [] },
+  pyrolusite: { id: 'MnO2', quantity: [] },
+  brass: { id: 'ZnCuPb', quantity: [] },
+  steel: { id: 'CrFeC', quantity: [] },
+  water: { id: 'H2O', quantity: [] },
+};
+const things = {
+  battery: {
+    id: 'brass, steel, cellulose',
     quantity: [],
   },
-  {
-    name: 'Cellulose',
-    id: 'C6H10O5N',
-    quantity: [],
-  },
-];
+};
 
-const currentInventory = [
-  {
-    name: inventoryList[name],
-    id: inventoryList.id,
-    symForm: [...inventoryList.id],
-    quantity: inventoryList.id.length,
-  },
-];
+function mining() {
+  const ore = () => Math.floor(Math.random() * (90 - 65 + 1) + 65);
+  const miningMax = 100;
+  const harvestedOre = Array.from(Array(miningMax)).map(ore);
+  return harvestedOre;
+}
+// console.log('mining :>> ', mining());
 
-function convertInv() {
-  const invObj = Object.keys(inventoryList);
-  console.log('currentInventory :>> ', invObj);
-  // inventoryList.forEach(i => {
-  //   return inventoryList;
-  // });
+function harvest() {
+  const fruit = () => Math.floor(Math.random() * (57 - 48 + 1) + 48);
+  const harvestMax = 30;
+  const harvestedFruit = Array.from(Array(harvestMax)).map(fruit);
+  return harvestedFruit;
+}
+// console.log('harvest :>> ', harvest());
+
+function refine() {
+  const payload = [...harvest(), ...mining()];
+  // console.log('payload :>> ', payload);
+  rawParticles = payload.map(x => String.fromCharCode(x).toLowerCase()).sort();
+  console.log('rawParticles:>> ', typeof rawParticles);
+  return rawParticles;
 }
 
-convertInv();
-
-const molecules = Object.keys(inventory);
-const refine = (arr1, arr2) => {
-  const refined = arr1.filter(el => arr2.indexOf(el) !== -1);
-  return refined;
-};
-
-const resources = refine(particles, molecules);
-
-const intoInventory = resources.forEach(res => {
-  inventory[res] += 1;
-  return inventory;
-});
-
-const buildQueue = [materials.steel, materials.brass];
-
-function preProd() {
-  buildQueue.forEach(item => {
-    const buildItem = item.sort();
-    console.log('buildItem.sort :>> ', buildItem);
-    return buildItem;
+const store = () => {
+  const counts = {};
+  rawParticles.forEach(x => {
+    counts[x] = (counts[x] || 0) + 1;
+    particles[x] = (particles[x] || 0) + x;
+    return counts;
   });
-}
+  console.log('counts :>> ', counts);
+  console.log('particles :>> ', particles);
+};
 
-function fabricate(buildItem) {
-  const pickList = [];
-  let pickResult = pickList.length === buildItem.length;
-  console.log('pickResult (pre) :>> ', pickResult);
-  console.log('mat :>> ', buildItem);
+const cycle = () => {
+  mining();
+  harvest();
+  refine();
+  store();
+};
 
-  const pick = function () {
-    console.log(`Commencing pick...`);
-    buildItem.forEach(i => {
-      if (inventory[i] > 0) {
-        pickList.push(i);
-        console.log('mat :>> ', pickList);
-      } else {
-        return console.warn(`ISF !${i}`);
-      }
-      return pickList;
-    });
-    pickResult = pickList.length === buildItem.length;
-    console.log(`pickResult inPick: ${pickResult}`);
-    return pickList;
-  };
+// const pickList = [];
+// let buildItem = [];
+// const buildQueue = [inventory.steel.id, inventory.water.id].sort();
+// let pickResult = pickList.length === buildItem.length;
 
-  function make() {
-    console.log(`pickResult pre-mk ${pickResult}`);
-    if (pickResult === true) {
-      console.log(`Commencing make...`);
-      // console.log('mat :>> ', buildItem);
-      pickList.forEach(i => {
-        console.log('inventory[i] :>> ', inventory[i]);
-        inventory[i] -= 1;
-      });
-      // console.log('mat :>> ', buildItem);
-    } else {
-      console.log('ISF: Back to the mines!');
-      mining();
-    }
-    return buildItem;
-  }
+// console.log('pickResult (pre) :>> ', pickResult);
 
-  pick();
-  make();
+// function pick() {
+//   console.log('quarks :>> ', quarks);
+//   console.log('Commencing pick...', buildItem);
+//   buildQueue.forEach(i => {
+//     buildItem = i.toLowerCase().split('').sort();
+//     return buildItem;
+//   });
 
-  console.log('pL===mat :>> ', pickList.length === buildQueue.length);
-  console.log('pickResult :>> ', pickResult);
-}
+//   console.log('quaks :>> ', quarks);
 
-preProd();
+//   buildItem.forEach((v, i) => {
+//     console.log('buildItem (pre) :>> ', buildItem[i]);
+//     if (quarks[i] > 0) {
+//       console.log('pre-pick :>> ', quarks[i]);
+//       pickList.push(buildItem[i]);
+//       console.log('pickList :>> ', pickList);
+//     } else {
+//       return console.warn(`ISF !${i}`);
+//     }
+//     return pickList;
+//   });
+//   pickResult = pickList.length === buildItem.length;
+//   console.log(`pickResult inPick: ${pickResult}`);
+//   return pickList;
+// }
 
-// const displayInventory = Object.entries(inventory).forEach(i => {
-//   console.log('inv :>> ', i);
-// });
-console.log('queue ofn:>> ', buildQueue);
-console.log('mat out :>> ', materials.brass.toString());
-console.log(
-  'mat out :>> ',
-  materials.brass.toString() === ['Z', 'N', 'C', 'U', 'P', 'B'].toString()
-);
+// function make() {
+//   console.log(`pickResult pre-mk ${pickResult}`);
+//   if (pickResult === true) {
+//     console.log(`Commencing make...`);
+//     // console.log('mat :>> ', buildItem);
+//     pickList.forEach(i => {
+//       console.log('quarks[i] :>> ', quarks[i]);
+//       quarks[i] -= 1;
+//     });
+//     // console.log('mat :>> ', buildItem);
+//   } else {
+//     console.log('ISF: Back to the mines!');
+//     mining;
+//   }
+//   return buildItem;
+// }
+
+// // buildQueue.forEach(item => {
+// //   buildItem = [...item.toLowerCase()].sort();
+// // });
+// pick();
+// make();
+
+// console.log('pL===mat :>> ', pickList.length === buildItem.length);
+// console.log('pickResult :>> ', pickResult);
+
+// // console.log('queue ofn:>> ', buildQueue);
+// // console.log('mat out :>> ', buildQueue);
+// // console.log(
+// //   'mat out :>> ',
+// //   buildQueue === ['b', 'c', 'n', 'p', 'u', 'z'].toString()
+// // );
