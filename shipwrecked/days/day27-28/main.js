@@ -37,23 +37,21 @@ const particles = {
   y: [],
   z: [],
 };
-const atoms = {
-  carbon: { id: 'C', quantity: [] },
-  cellulose: { id: 'C6H10O5N', quantity: [] },
+const molecules = {
+  carbon: { id: 'C', quantity: particles.c.length },
   chromium: { id: 'Cr', quantity: [] },
   copper: { id: 'Cu', quantity: [] },
-  hydrogen: { id: 'H', quantity: [] },
+  hydrogen: { id: 'H', quantity: particles.h.length },
   iron: { id: 'Fe', quantity: [] },
   lead: { id: 'Pb', quantity: [] },
   manganese: { id: 'Mn', quantity: [] },
   nickel: { id: 'Ni', quantity: [] },
-  oxygen: { id: 'O', quantity: [] },
+  oxygen: { id: 'O', quantity: particles.o.length },
   zinc: { id: 'Zn', quantity: [] },
-};
-const compounds = {
+  brass: { id: 'ZnCuPb', quantity: [] },
+  cellulose: { id: 'C6H10O5N', quantity: [] },
   potassiumHydroxide: { id: 'KOH', quantity: [] },
   pyrolusite: { id: 'MnO2', quantity: [] },
-  brass: { id: 'ZnCuPb', quantity: [] },
   steel: { id: 'CrFeC', quantity: [] },
   water: { id: 'H2O', quantity: [] },
 };
@@ -84,27 +82,60 @@ function refine() {
   const payload = [...harvest(), ...mining()];
   // console.log('payload :>> ', payload);
   rawParticles = payload.map(x => String.fromCharCode(x).toLowerCase()).sort();
-  console.log('rawParticles:>> ', typeof rawParticles);
   return rawParticles;
 }
 
-const store = () => {
-  const counts = {};
+console.log('particles:>> ', particles);
+
+const storeParticles = () => {
   rawParticles.forEach(x => {
-    counts[x] = (counts[x] || 0) + 1;
     particles[x] = (particles[x] || 0) + x;
-    return counts;
   });
-  console.log('counts :>> ', counts);
-  console.log('particles :>> ', particles);
+};
+
+// buildQueue
+const moleculeBuildQueue = (...builds) => {
+  const buildItem = [];
+  const pickList = [];
+  const atoms = builds.map(i =>
+    [...molecules[i].id].sort().toString().toLowerCase()
+  );
+  console.log('atoms :>> ', atoms);
+  atoms.forEach(atom => buildItem.push([...atom]));
+
+  buildItem.forEach((v, i) => {
+    console.log('buildItem (pre) :>> ', buildItem[i]);
+    if (i === ',') return;
+    if (particles[i] <= 0) return console.warn(`ISF !${i}`);
+    console.log('pre-pick :>> ', particles[i]);
+    pickList.push(buildItem[i]);
+    console.log('pickList :>> ', pickList);
+  });
+  return pickList;
+};
+
+// makeItem
+const makeItem = (...args) => {
+  console.log('args :>> ', args);
+};
+
+// storeItem
+const storeItem = (...args) => {
+  console.log('args :>> ', args);
 };
 
 const cycle = () => {
   mining();
   harvest();
   refine();
-  store();
+  storeParticles();
 };
+cycle();
+moleculeBuildQueue('steel', 'water');
+
+// console.log('particles  postCall:>> ', particles);
+console.log(`moleculeBuildQueue post :>> ${moleculeBuildQueue}`);
+// console.log('pickList postCall:>> ', (moleculeBuildQueue()));
 
 // const pickList = [];
 // let buildItem = [];
@@ -123,17 +154,6 @@ const cycle = () => {
 
 //   console.log('quaks :>> ', quarks);
 
-//   buildItem.forEach((v, i) => {
-//     console.log('buildItem (pre) :>> ', buildItem[i]);
-//     if (quarks[i] > 0) {
-//       console.log('pre-pick :>> ', quarks[i]);
-//       pickList.push(buildItem[i]);
-//       console.log('pickList :>> ', pickList);
-//     } else {
-//       return console.warn(`ISF !${i}`);
-//     }
-//     return pickList;
-//   });
 //   pickResult = pickList.length === buildItem.length;
 //   console.log(`pickResult inPick: ${pickResult}`);
 //   return pickList;
