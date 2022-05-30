@@ -49,6 +49,8 @@ const inventory = {
   R: 0,
   U: 0,
   Z: 0,
+};
+const temp = {
   carbon: this.C,
   cellulose: 0,
   chromium: 0,
@@ -64,12 +66,14 @@ const inventory = {
   battery: 0,
 };
 
+// B,C,E,F,H,K,N,O,P,R,U,Z
+// a,d,g,i,j,l,m,q,s,t,v,w,x,y
 const molecules = Object.keys(inventory);
 const refine = (arr1, arr2) => {
   const refined = arr1.filter(el => arr2.indexOf(el) !== -1);
   return refined;
 };
-
+console.log('molecules :>> ', molecules.toString());
 const resources = refine(particles, molecules);
 
 const intoInventory = resources.forEach(res => {

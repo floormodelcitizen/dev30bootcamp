@@ -1,15 +1,5 @@
 let rawParticles = [];
 const particles = {
-  0: [],
-  1: [],
-  2: [],
-  3: [],
-  4: [],
-  5: [],
-  6: [],
-  7: [],
-  8: [],
-  9: [],
   a: [],
   b: [],
   c: [],
@@ -37,33 +27,68 @@ const particles = {
   y: [],
   z: [],
 };
+
+// const tArray = Object.entries(particles);
+// console.log('tArray :>> ', tArray);
+
 const molecules = {
-  carbon: { id: 'C', quantity: particles.c.length },
-  chromium: { id: 'Cr', quantity: [] },
-  copper: { id: 'Cu', quantity: [] },
-  hydrogen: { id: 'H', quantity: particles.h.length },
-  iron: { id: 'Fe', quantity: [] },
-  lead: { id: 'Pb', quantity: [] },
-  manganese: { id: 'Mn', quantity: [] },
-  nickel: { id: 'Ni', quantity: [] },
-  oxygen: { id: 'O', quantity: particles.o.length },
-  zinc: { id: 'Zn', quantity: [] },
-  brass: { id: 'ZnCuPb', quantity: [] },
-  cellulose: { id: 'C6H10O5N', quantity: [] },
-  potassiumHydroxide: { id: 'KOH', quantity: [] },
-  pyrolusite: { id: 'MnO2', quantity: [] },
-  steel: { id: 'CrFeC', quantity: [] },
-  water: { id: 'H2O', quantity: [] },
+  carbon: { id: 'C', composition: ['c'], quantity: particles.c.length },
+  chromium: { id: 'Cr', composition: ['c', 'r'], quantity: [] },
+  copper: { id: 'Cu', composition: ['c', 'u'], quantity: [] },
+  hydrogen: { id: 'H', composition: ['h'], quantity: particles.h.length },
+  iron: { id: 'Fe', composition: ['f', 'e'], quantity: [] },
+  lead: { id: 'Pb', composition: ['p', 'b'], quantity: [] },
+  manganese: { id: 'Mn', composition: ['m', 'n'], quantity: [] },
+  nickel: { id: 'Ni', composition: ['n', 'i'], quantity: [] },
+  oxygen: { id: 'O', composition: ['o'], quantity: particles.o.length },
+  zinc: { id: 'Zn', composition: ['z', 'n'], quantity: [] },
+  brass: {
+    id: 'ZnCuPb',
+    composition: ['z', 'n', 'c', 'u', 'p', 'b'],
+    quantity: [],
+  },
+  cellulose: {
+    id: 'C6H10O5N',
+    composition: [
+      'c',
+      '6',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      'h',
+      '0',
+      'o',
+      'o',
+      'o',
+      'o',
+      'o',
+      'n',
+    ],
+    quantity: [],
+  },
+  potassiumHydroxide: { id: 'KOH', composition: ['k', 'o', 'h'], quantity: [] },
+  pyrolusite: { id: 'MnO2', composition: ['m', 'n', 'o', 'o'], quantity: [] },
+  steel: { id: 'CrFeC', composition: ['c', 'r', 'f', 'e', 'c'], quantity: [] },
+  water: { id: 'H2O', composition: ['h', 'o', 'o'], quantity: [] },
 };
+
 const things = {
   battery: {
     id: 'brass, steel, cellulose',
+    composition: ['brass', 'steel', 'cellulose'],
     quantity: [],
   },
 };
 
 function mining() {
-  const ore = () => Math.floor(Math.random() * (90 - 65 + 1) + 65);
+  const ore = () => Math.floor(Math.random() * (122 - 97 + 1) + 97);
+  // const ore = () => Math.floor(Math.random() * (90 - 65 + 1) + 65);
   const miningMax = 100;
   const harvestedOre = Array.from(Array(miningMax)).map(ore);
   return harvestedOre;
@@ -71,8 +96,10 @@ function mining() {
 // console.log('mining :>> ', mining());
 
 function harvest() {
-  const fruit = () => Math.floor(Math.random() * (57 - 48 + 1) + 48);
-  const harvestMax = 30;
+  // const utf16 = [99, 104, 111];
+  const fruit = () => Math.floor(Math.random() * (111 - 99 + 1) + 99);
+  // const ore = () => Math.floor(Math.random() * (90 - 65 + 1) + 65);
+  const harvestMax = 50;
   const harvestedFruit = Array.from(Array(harvestMax)).map(fruit);
   return harvestedFruit;
 }
@@ -85,39 +112,41 @@ function refine() {
   return rawParticles;
 }
 
-console.log('particles:>> ', particles);
-
 const storeParticles = () => {
   rawParticles.forEach(x => {
     particles[x] = (particles[x] || 0) + x;
   });
 };
 
-// buildQueue
-const moleculeBuildQueue = (...builds) => {
-  const buildItem = [];
-  const pickList = [];
-  const atoms = builds.map(i =>
-    [...molecules[i].id].sort().toString().toLowerCase()
-  );
-  console.log('atoms :>> ', atoms);
-  atoms.forEach(atom => buildItem.push([...atom]));
+// const moleculeBuildQueue = (...builds) => {
+//   builds.forEach(i => {
+//     let atom = molecules[i][1].composition;
+//     atom = [...atom].sort();
+//     console.log('atom :>> ', atom);
+//     return atom;
+//   });
+// };
 
-  buildItem.forEach((v, i) => {
-    console.log('buildItem (pre) :>> ', buildItem[i]);
-    if (i === ',') return;
-    if (particles[i] <= 0) return console.warn(`ISF !${i}`);
-    console.log('pre-pick :>> ', particles[i]);
-    pickList.push(buildItem[i]);
-    console.log('pickList :>> ', pickList);
-  });
-  return pickList;
-};
+function build(...args) {
+  const buildQueue = args;
+  const buildItem = buildQueue.forEach(i =>
+    Array.from(molecules[i].composition.sort())
+  );
+  return buildItem;
+}
+console.log('build :>> ', build('water'));
 
 // makeItem
-const makeItem = (...args) => {
-  console.log('args :>> ', args);
-};
+function makeItem(item) {
+  buildItem = item;
+  item.forEach((v, i) => {
+    Object.getOwnPropertyDescriptor(particles, ['v']);
+    console.log('particles[v] :>> ', particles[i]);
+  });
+}
+console.log('buildItem.length :>> ', null);
+
+makeItem(['h', 'o', 'o']);
 
 // storeItem
 const storeItem = (...args) => {
@@ -129,13 +158,25 @@ const cycle = () => {
   harvest();
   refine();
   storeParticles();
+  build('water', 'steel');
 };
 cycle();
-moleculeBuildQueue('steel', 'water');
+console.log('particles:pre >> ', particles.a);
+// console.log('particles:test >> ', particles.a);
+function partUpdate(arr, i) {
+  arr[i] = arr[i].slice(0, 1);
+}
+partUpdate(particles, 'a');
+console.log('particles:post >> ', particles.a);
+// moleculeBuildQueue('steel', 'water');
+// makeItem(moleculeBuildQueue);
 
-// console.log('particles  postCall:>> ', particles);
-console.log(`moleculeBuildQueue post :>> ${moleculeBuildQueue}`);
-// console.log('pickList postCall:>> ', (moleculeBuildQueue()));
+// // console.log('particles  postCall:>> ', particles);
+// console.log(
+//   'moleculeBuildQueue post :>>',
+//   moleculeBuildQueue('steel', 'water')
+// );
+// console.log('pickList postCall:>> ', moleculeBuildQueue());
 
 // const pickList = [];
 // let buildItem = [];
