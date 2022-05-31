@@ -28,7 +28,7 @@ const particles = {
   z: [],
 };
 
-// const tArray = Object.entries(particles);
+const tArray = Object.entries(particles);
 // console.log('tArray :>> ', tArray);
 
 const molecules = {
@@ -93,7 +93,8 @@ function mining() {
   const harvestedOre = Array.from(Array(miningMax)).map(ore);
   return harvestedOre;
 }
-// console.log('mining :>> ', mining());
+const miningResults = mining();
+// console.log('miningResults :>> ', miningResults);
 
 function harvest() {
   // const utf16 = [99, 104, 111];
@@ -103,132 +104,86 @@ function harvest() {
   const harvestedFruit = Array.from(Array(harvestMax)).map(fruit);
   return harvestedFruit;
 }
-// console.log('harvest :>> ', harvest());
+const harvestResults = harvest();
+// console.log('harvestResults :>> ', harvestResults);
 
-function refine() {
-  const payload = [...harvest(), ...mining()];
+function refine(...args) {
+  const payload = args;
   // console.log('payload :>> ', payload);
   rawParticles = payload.map(x => String.fromCharCode(x).toLowerCase()).sort();
   return rawParticles;
 }
+const refineResults = refine(...miningResults, ...harvestResults);
+// console.log('refineResults :>> ', refineResults);
 
-const storeParticles = () => {
+function storeParticles() {
+  // rawParticles.forEach(x => (particles[x] = (particles[x] || 0) + x));
   rawParticles.forEach(x => {
-    particles[x] = (particles[x] || 0) + x;
+    // console.log('particles :>> ', particles[x]);
+    particles[x].push(x);
+
+    return particles;
   });
-};
+}
+const storeParticlesResults = storeParticles(rawParticles);
+// console.log('storeParticleResults :>> ', storeParticleResults);
 
-// const moleculeBuildQueue = (...builds) => {
-//   builds.forEach(i => {
-//     let atom = molecules[i][1].composition;
-//     atom = [...atom].sort();
-//     console.log('atom :>> ', atom);
-//     return atom;
-//   });
-// };
+const toBuild = [];
+const buildHistory = [];
 
-function build(...args) {
+function prepBuildForPick(...args) {
   const buildQueue = args;
-  const buildItem = buildQueue.forEach(i =>
-    Array.from(molecules[i].composition.sort())
-  );
-  return buildItem;
-}
-console.log('build :>> ', build('water'));
-
-// makeItem
-function makeItem(item) {
-  buildItem = item;
-  item.forEach((v, i) => {
-    Object.getOwnPropertyDescriptor(particles, ['v']);
-    console.log('particles[v] :>> ', particles[i]);
+  let single = [];
+  buildQueue.forEach(i => {
+    single = Array.from(molecules[i].composition.sort());
   });
+  return single;
 }
-console.log('buildItem.length :>> ', null);
+const buildResult = prepBuildForPick('water');
+const partArr = Object.entries(particles);
 
-makeItem(['h', 'o', 'o']);
+const pickList = [];
+// pickItem
+function pickItem(item) {
+  console.log('item :>> ', item);
+  item.forEach(v => {
+    console.log('Item [v] :>> ', v);
+    console.log('partilces-pre:>> ', particles[v].length);
+    if (particles[v].length <= 0) {
+      return console.warn(`Shortage of ${v} halted ${item} build`);
+    }
+    pickList.push(particles[v].shift());
+    console.log('partilces-post:>> ', particles[v].length);
+    console.log('pickList :>> ', pickList.toString());
+    if (pickList.toString() !== molecules.water.composition.toString())
+      console.log(
+        'molecules.water.composition :>> ',
+        molecules.water.composition
+      );
+  });
+
+  console.log('pickList post :>> ', pickList);
+  console.log('item post:>> ', item);
+
+  if (pickList.length === item.length) {
+    console.log('true :>> ', true);
+  }
+}
+const pickItemResults = pickItem(buildResult);
+// const pickVsBuiltPartity = pickList.length === buildResult.length;
 
 // storeItem
-const storeItem = (...args) => {
-  console.log('args :>> ', args);
-};
+// const storeItem = (...args) => {
+//   console.log('args :>> ', args);
+// };
 
+// Function Calls
 const cycle = () => {
   mining();
   harvest();
   refine();
   storeParticles();
-  build('water', 'steel');
 };
 cycle();
-console.log('particles:pre >> ', particles.a);
-// console.log('particles:test >> ', particles.a);
-function partUpdate(arr, i) {
-  arr[i] = arr[i].slice(0, 1);
-}
-partUpdate(particles, 'a');
-console.log('particles:post >> ', particles.a);
-// moleculeBuildQueue('steel', 'water');
-// makeItem(moleculeBuildQueue);
-
-// // console.log('particles  postCall:>> ', particles);
-// console.log(
-//   'moleculeBuildQueue post :>>',
-//   moleculeBuildQueue('steel', 'water')
-// );
-// console.log('pickList postCall:>> ', moleculeBuildQueue());
-
-// const pickList = [];
-// let buildItem = [];
-// const buildQueue = [inventory.steel.id, inventory.water.id].sort();
-// let pickResult = pickList.length === buildItem.length;
-
-// console.log('pickResult (pre) :>> ', pickResult);
-
-// function pick() {
-//   console.log('quarks :>> ', quarks);
-//   console.log('Commencing pick...', buildItem);
-//   buildQueue.forEach(i => {
-//     buildItem = i.toLowerCase().split('').sort();
-//     return buildItem;
-//   });
-
-//   console.log('quaks :>> ', quarks);
-
-//   pickResult = pickList.length === buildItem.length;
-//   console.log(`pickResult inPick: ${pickResult}`);
-//   return pickList;
-// }
-
-// function make() {
-//   console.log(`pickResult pre-mk ${pickResult}`);
-//   if (pickResult === true) {
-//     console.log(`Commencing make...`);
-//     // console.log('mat :>> ', buildItem);
-//     pickList.forEach(i => {
-//       console.log('quarks[i] :>> ', quarks[i]);
-//       quarks[i] -= 1;
-//     });
-//     // console.log('mat :>> ', buildItem);
-//   } else {
-//     console.log('ISF: Back to the mines!');
-//     mining;
-//   }
-//   return buildItem;
-// }
-
-// // buildQueue.forEach(item => {
-// //   buildItem = [...item.toLowerCase()].sort();
-// // });
-// pick();
-// make();
-
-// console.log('pL===mat :>> ', pickList.length === buildItem.length);
-// console.log('pickResult :>> ', pickResult);
-
-// // console.log('queue ofn:>> ', buildQueue);
-// // console.log('mat out :>> ', buildQueue);
-// // console.log(
-// //   'mat out :>> ',
-// //   buildQueue === ['b', 'c', 'n', 'p', 'u', 'z'].toString()
-// // );
+prepBuildForPick();
+pickItem(buildResult);
