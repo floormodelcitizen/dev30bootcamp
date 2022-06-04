@@ -14,5 +14,9 @@ menu = {
   },
   getRandomDishFromCourse(courseName) {
     const dishes = courses.courseName * (Math.random(Math.floor) * 1);
+    console.log('dishes :>> ', menu.dishes);
+    return dishes;
   },
 };
+
+console.log('this.courses :>>', menu.courses);

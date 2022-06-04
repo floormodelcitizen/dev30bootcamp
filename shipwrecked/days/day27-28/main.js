@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 let rawParticles = [];
 const particles = {
   a: [],
@@ -28,8 +29,8 @@ const particles = {
   z: [],
 };
 
-const tArray = Object.entries(particles);
-// console.log('tArray :>> ', tArray);
+const pArray = Object.entries(particles);
+// console.log('pArray :>> ', pArray);
 
 const molecules = {
   carbon: { id: 'C', composition: ['c'], quantity: particles.c.length },
@@ -78,6 +79,9 @@ const molecules = {
   water: { id: 'H2O', composition: ['h', 'o', 'o'], quantity: [] },
 };
 
+const mArray = Object.entries(molecules);
+// console.log('mArray :>> ', mArray);
+
 const things = {
   battery: {
     id: 'brass, steel, cellulose',
@@ -121,69 +125,65 @@ function storeParticles() {
   rawParticles.forEach(x => {
     // console.log('particles :>> ', particles[x]);
     particles[x].push(x);
-
     return particles;
   });
 }
 const storeParticlesResults = storeParticles(rawParticles);
 // console.log('storeParticleResults :>> ', storeParticleResults);
 
-const toBuild = [];
+const toBuild = ['water'];
+const buildInProcess = [];
 const buildHistory = [];
 
-function prepBuildForPick(...args) {
-  const buildQueue = args;
+function prepBuildForPick(args) {
+  const buildList = args;
   let single = [];
-  buildQueue.forEach(i => {
+  buildList.forEach(i => {
     single = Array.from(molecules[i].composition.sort());
   });
   return single;
 }
-const buildResult = prepBuildForPick('water');
-const partArr = Object.entries(particles);
-
+// const buildResult = prepBuildForPick(toBuild);
 const pickList = [];
+// console.log('buildInProcess :>> ', prepBuildForPick(toBuild));
 // pickItem
 function pickItem(item) {
   console.log('item :>> ', item);
-  item.forEach(v => {
-    console.log('Item [v] :>> ', v);
+  item.forEach((v, i) => {
+    console.log('Item [v] :>> ', v, i);
     console.log('partilces-pre:>> ', particles[v].length);
-    if (particles[v].length <= 0) {
-      return console.warn(`Shortage of ${v} halted ${item} build`);
-    }
-    pickList.push(particles[v].shift());
+    if (particles[v].length >= 0)
+      // return console.warn(`Shortage of ${v} halted ${item} build`);
+      pickList.push(particles[v].shift());
     console.log('partilces-post:>> ', particles[v].length);
-    console.log('pickList :>> ', pickList.toString());
-    if (pickList.toString() !== molecules.water.composition.toString())
-      console.log(
-        'molecules.water.composition :>> ',
-        molecules.water.composition
-      );
+    console.log('pickList toString:>> ', pickList.toString());
+    return pickList;
   });
+  if (pickList.toString() !== molecules.water.composition.toString())
+    console.log(
+      'molecules.water.composition :>> ',
+      molecules.water.composition
+    );
 
   console.log('pickList post :>> ', pickList);
   console.log('item post:>> ', item);
 
   if (pickList.length === item.length) {
-    console.log('true :>> ', true);
+    // console.log('true :>> ', true);
   }
 }
-const pickItemResults = pickItem(buildResult);
+// const pickItemResults = pickItem(buildInProcess);
 // const pickVsBuiltPartity = pickList.length === buildResult.length;
 
-// storeItem
-// const storeItem = (...args) => {
-//   console.log('args :>> ', args);
-// };
-
 // Function Calls
-const cycle = () => {
-  mining();
-  harvest();
-  refine();
-  storeParticles();
-};
-cycle();
-prepBuildForPick();
-pickItem(buildResult);
+
+mining();
+harvest();
+refine();
+storeParticles();
+
+prepBuildForPick(toBuild);
+pickItem(buildInProcess);
+
+// console.log('pickItem() :>> ', pickItem(buildInProcess));
+console.log('mArray :>> ', mArray);
